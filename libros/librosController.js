@@ -66,6 +66,24 @@ app.get("/year/:year", function (req, res) {
   });
 });
 
+app.get("/search", function (req, res) {
+  let search = req.query.search;
+
+  let expSearch = new RegExp(search, "i");
+
+  let busqueda = { "titulo": { $regex: expSearch } };
+
+  res.header("Access-Control-Allow-Origin", "*");
+  libros.find({ busqueda }, (err, libro) => {
+    if (err) return res.status(500).send("Problemas buscando");
+    if (!libro)
+      return res
+        .status(404)
+        .send("Libro no encontrado con la editorial: " + req.params.editorial);
+    res.status(200).send(libro);
+  });
+});
+
 
 
 module.exports = app;
