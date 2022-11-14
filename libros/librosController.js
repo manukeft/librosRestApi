@@ -57,7 +57,7 @@ app.get("/editorial/:editorial", function (req, res) {
 
 app.get("/year/:year", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
-  libros.findOne({ year: parseInt(req.params.year) }, (err, libro) => {
+  libros.find({ year: parseInt(req.params.year) }, (err, libro) => {
     if (err)
       return res.status(500).send({ error: "Problemas buscando el libro" });
     if (!libro) return res.status(404).send({ error: "404" });
@@ -66,24 +66,24 @@ app.get("/year/:year", function (req, res) {
   });
 });
 
-app.get("/search", function (req, res) {
-  let search = req.query.search;
+// app.get("/search", function (req, res) {
+//   let search = req.query.search;
 
-  let expSearch = new RegExp(search, "i");
+//   let expSearch = new RegExp(search, "i");
 
-  let busqueda = { "titulo": { $regex: expSearch } };
+//   let busqueda = { "titulo": { $regex: expSearch } };
 
-  res.header("Access-Control-Allow-Origin", "*");
-  libros.find({ busqueda }, (err, libro) => {
-    if (err) return res.status(500).send("Problemas buscando");
-    if (!libro)
-      return res
-        .status(404)
-        .send("Libro no encontrado con la editorial: " + req.params.editorial);
-    res.status(200).send(libro);
-  });
-});
+//   console.log(search)
 
-
+//   res.header("Access-Control-Allow-Origin", "*");
+//   libros.find({ busqueda }, (err, libro) => {
+//     if (err) return res.status(500).send("Problemas buscando");
+//     if (!libro)
+//       return res
+//         .status(404)
+//         .send({error: "404"});
+//     res.status(200).send(libro);
+//   });
+// });
 
 module.exports = app;
