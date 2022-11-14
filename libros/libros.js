@@ -8,7 +8,8 @@ const librosSchema = new mongoose.Schema({
   autor: String,
   year: Number,
   pais: String,
-  editorial: String
+  editorial: String,
+  precio: Number
 });
 mongoose.model("libros", librosSchema);
 module.exports = mongoose.model("libros");
